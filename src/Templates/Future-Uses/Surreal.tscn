@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/textures/effects/fog.png" type="Texture" id=1]
+[ext_resource path="res://src/Templates/Future-Uses/diagonal_movement.shader" type="Shader" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/scale_movement = 0.2
+shader_param/scale_alpha = 0.5
+shader_param/transparency = 1.5
+
+[node name="Fog" type="Sprite"]
+self_modulate = Color( 1, 1, 1, 0.588235 )
+material = SubResource( 1 )
+position = Vector2( 938.584, 576.887 )
+scale = Vector2( 4.27394, 3.52778 )
+z_index = 10
+z_as_relative = false
+texture = ExtResource( 1 )

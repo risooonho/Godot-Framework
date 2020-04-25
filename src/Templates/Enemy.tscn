@@ -1,0 +1,165 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/textures/dialog_box.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/light/player_light.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/bg.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/light/moonlight.png" type="Texture" id=6]
+[ext_resource path="res://src/Templates/EnemyMovement.gd" type="Script" id=7]
+[ext_resource path="res://particle.png" type="Texture" id=8]
+[ext_resource path="res://src/Scripts/EnemySurveyors.tres.gd" type="Script" id=9]
+[ext_resource path="res://icon_cursed.png" type="Texture" id=10]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 282.546, 139.441, 83.7567, 152.137, 99.8562, 80.631, 266.808, 81.0961 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+outlines = [ PoolVector2Array( 282.546, 139.441, 83.7567, 152.137, 99.8562, 80.631, 266.808, 81.0961 ) ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 34.45
+height = 1.62222
+
+[node name="EnemySurveyor" type="Node2D"]
+position = Vector2( 4.68115, 5.79419 )
+rotation = -0.00278592
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+speed = 50.0
+reset_timer_wait_time = 2.0
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+position = Vector2( -2.54473, -4.09127 )
+navpoly = SubResource( 1 )
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+position = Vector2( 315.595, -74.8317 )
+default_color = Color( 0.937255, 0.156863, 0.156863, 1 )
+
+[node name="Line2D2" type="Line2D" parent="."]
+visible = false
+position = Vector2( 315.595, -74.8317 )
+default_color = Color( 0.0784314, 0.901961, 0.227451, 1 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 273.508, 108.785 )
+__meta__ = {
+"_gizmo_extents_": 100.0
+}
+
+[node name="Sprite" type="Sprite" parent="Position2D"]
+scale = Vector2( 0.286555, 0.286555 )
+texture = ExtResource( 8 )
+
+[node name="Enemy" type="KinematicBody2D" parent="."]
+position = Vector2( 121.074, 81.4661 )
+scale = Vector2( 0.540418, 0.53687 )
+z_index = 1
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_ik_": true
+}
+
+[node name="Shadow" type="Sprite" parent="Enemy"]
+modulate = Color( 0.0666667, 0.0666667, 0.0666667, 0.580392 )
+position = Vector2( -0.836243, 30.1046 )
+scale = Vector2( 0.154165, 0.0629665 )
+texture = ExtResource( 2 )
+
+[node name="Rotatable" type="Node2D" parent="Enemy"]
+
+[node name="Sprite" type="AnimatedSprite" parent="Enemy/Rotatable"]
+frames = SubResource( 2 )
+
+[node name="DetectionArea" type="Area2D" parent="Enemy/Rotatable"]
+scale = Vector2( 2.73996, 2.46791 )
+monitorable = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Enemy/Rotatable/DetectionArea"]
+position = Vector2( 0.785019, 28.791 )
+scale = Vector2( 2.41862, -1.36485 )
+polygon = PoolVector2Array( -8.06148, 1.54501, 0.296307, -15.1401, 8.03956, 2.51227, 4.13685, 12.2272, -4.21155, 12.0447 )
+
+[node name="Cone" type="Sprite" parent="Enemy/Rotatable/DetectionArea"]
+visible = false
+self_modulate = Color( 18.5, 33.14, 36.42, 1 )
+show_behind_parent = true
+position = Vector2( 1.28327, 77.0068 )
+scale = Vector2( 0.25255, 0.256251 )
+texture = ExtResource( 6 )
+
+[node name="DamageArea" type="Area2D" parent="Enemy/Rotatable"]
+scale = Vector2( 2.73996, 2.46791 )
+monitorable = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Enemy/Rotatable/DamageArea"]
+position = Vector2( -30.3331, 14.7387 )
+polygon = PoolVector2Array( 19.3936, -7.24826, 41.4003, -6.8916, 41.561, -3.68146, 29.8347, -0.292999, 19.233, -2.96811 )
+
+[node name="Cone" type="Sprite" parent="Enemy/Rotatable/DamageArea"]
+visible = false
+self_modulate = Color( 18.5, 33.14, 36.42, 1 )
+show_behind_parent = true
+position = Vector2( 1.28327, 77.0068 )
+scale = Vector2( 0.25255, 0.256251 )
+texture = ExtResource( 6 )
+
+[node name="Face" type="AnimatedSprite" parent="Enemy"]
+visible = false
+frames = SubResource( 3 )
+
+[node name="Bark" type="Sprite" parent="Enemy"]
+visible = false
+position = Vector2( 65.0703, -61.3871 )
+texture = ExtResource( 10 )
+
+[node name="BarkAlert" type="Sprite" parent="Enemy"]
+visible = false
+position = Vector2( -36.8323, -31.9213 )
+texture = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy"]
+
+[node name="ResetTimer" type="Timer" parent="Enemy"]
+wait_time = 3.0
+one_shot = true
+
+[node name="BodyShape" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource( 4 )
+
+[node name="RayCast2D" type="RayCast2D" parent="Enemy"]
+enabled = true
+collision_mask = 5
+collide_with_areas = true
+collide_with_bodies = false
+[connection signal="body_entered" from="Enemy/Rotatable/DetectionArea" to="Enemy" method="_on_DetectionArea_body_entered"]
+[connection signal="body_exited" from="Enemy/Rotatable/DetectionArea" to="Enemy" method="_on_DetectionArea_body_exited"]
+[connection signal="body_entered" from="Enemy/Rotatable/DamageArea" to="Enemy" method="_on_DamageArea_body_entered"]

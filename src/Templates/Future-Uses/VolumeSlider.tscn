@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Templates/Future-Uses/UIFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Scripts/VolumeSlider.gd" type="Script" id=2]
+
+[node name="VolumeSlider" type="HSlider"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -313.5
+margin_top = -304.429
+margin_right = 313.5
+margin_bottom = -213.429
+size_flags_horizontal = 15
+size_flags_vertical = 15
+min_value = -20.0
+max_value = 0.0
+step = 2.0
+value = -16.0
+tick_count = 10
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -92.0
+margin_top = -32.6489
+margin_right = 92.0
+margin_bottom = 39.3511
+custom_fonts/font = ExtResource( 1 )
+text = "Volume"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="value_changed" from="." to="." method="_on_VolumeSlider_value_changed"]

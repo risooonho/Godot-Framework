@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+
+export (String, FILE) var exit_scene
+
+export (String, FILE) var locked_interaction_script
+
+export (String, FILE) var unlocked_interaction_script
+
+onready var save_data: Dictionary = global.get_save_data()
+
+# Set the condition here
+onready var condition: bool
+
+# Connect signals 
+func _ready() -> void:
+	connect(\"body_entered\", self, \"_on_body_entered\")
+	# Remove unlocked dialogue if this exit point was unlocked before
+	if save_data.has(get_parent().get_parent().filename):
+		if save_data[get_parent().get_parent().filename].has(get_path()):
+			unlocked_interaction_script = null
+	
+# Dialogue handler
+func talk(script) -> void:
+	global.set_can_talk(false)
+	MSG.start_dialogue(script, self)
+
+func change_scene(body) -> void:
+	# Track the exit points in the save file
+	global.append_save_data(body.get_parent().get_parent().filename, \"exit_point\", {
+		\"position_x\": body.position.x,
+		\"position_y\": body.position.y,
+		\"exit_node\": get_path(),
+	})
+	# Flag to remember locked state
+	global.append_save_data(body.get_parent().get_parent().filename, get_path(), {\"unlocked\": true})
+	
+	body.get_parent().get_parent().change_scene(exit_scene)
+
+# Exit function
+func _on_body_entered(body: PhysicsBody2D) -> void:
+	if body as KinematicBody2D and body.name == global.current_player_name and exit_scene:
+		if condition:
+			if unlocked_interaction_script:
+				talk(unlocked_interaction_script)
+				yield(global, \"dialogue_finished\")
+				change_scene(body)
+			else:
+				change_scene(body)
+		else:
+			if locked_interaction_script:
+				talk(locked_interaction_script)
+"
+
+[node name="LockedExitPoint" type="Area2D"]
+position = Vector2( -0.765625, 2.85533 )
+rotation = -3.14159
+monitorable = false
+collision_layer = 0
+script = SubResource( 1 )
+exit_scene = "res://src/Scenes/Prototype/Floor1/SurveillanceWing/ControlRoom.tscn"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -549.475, -448.552 )
+polygon = PoolVector2Array( 523.304, 446.432, 575.523, 447.312, 575.523, 459.203, 523.915, 460.155 )

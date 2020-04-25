@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Scripts/ExitNode.gd" type="Script" id=1]
+
+[node name="ExitPoint" type="Area2D"]
+monitorable = false
+collision_layer = 0
+script = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -91.2742, -51.5396, 79.0328, -45.6669, 96.6508, 57.1046, -76.5925, 60.0409 )
+[connection signal="body_entered" from="." to="." method="_on_ExitPoint_body_entered"]

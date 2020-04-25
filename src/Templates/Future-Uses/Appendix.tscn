@@ -1,0 +1,209 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/MSG_System/fonts/open_sans/OpenSans-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/Templates/Future-Uses/AppendixItem.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Scripts/UI/Popup.gd" type="Script" id=3]
+[ext_resource path="res://addons/MSG_System/fonts/font_normal.tres" type="DynamicFont" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="Appendix" type="Control"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Popup" type="Popup" parent="."]
+visible = true
+margin_right = 1924.0
+margin_bottom = 1091.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+set_gaps = 0
+
+[node name="Panel" type="Panel" parent="Popup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -962.0
+margin_top = -545.5
+margin_right = 958.0
+margin_bottom = 534.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -540.0
+margin_right = 960.0
+margin_bottom = 540.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Row1" type="HBoxContainer" parent="Popup/Panel/VBoxContainer"]
+margin_right = 1920.0
+margin_bottom = 247.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect1" parent="Popup/Panel/VBoxContainer/Row1" instance=ExtResource( 2 )]
+margin_right = 637.0
+
+[node name="TextureRect2" parent="Popup/Panel/VBoxContainer/Row1" instance=ExtResource( 2 )]
+margin_left = 641.0
+margin_right = 1278.0
+
+[node name="TextureRect3" parent="Popup/Panel/VBoxContainer/Row1" instance=ExtResource( 2 )]
+margin_left = 1282.0
+margin_right = 1920.0
+
+[node name="Row2" type="HBoxContainer" parent="Popup/Panel/VBoxContainer"]
+margin_top = 251.0
+margin_right = 1920.0
+margin_bottom = 498.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect1" parent="Popup/Panel/VBoxContainer/Row2" instance=ExtResource( 2 )]
+margin_right = 637.0
+
+[node name="TextureRect2" parent="Popup/Panel/VBoxContainer/Row2" instance=ExtResource( 2 )]
+margin_left = 641.0
+margin_right = 1278.0
+
+[node name="TextureRect3" parent="Popup/Panel/VBoxContainer/Row2" instance=ExtResource( 2 )]
+margin_left = 1282.0
+margin_right = 1920.0
+
+[node name="Row3" type="HBoxContainer" parent="Popup/Panel/VBoxContainer"]
+margin_top = 502.0
+margin_right = 1920.0
+margin_bottom = 749.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect1" parent="Popup/Panel/VBoxContainer/Row3" instance=ExtResource( 2 )]
+margin_right = 637.0
+
+[node name="TextureRect2" parent="Popup/Panel/VBoxContainer/Row3" instance=ExtResource( 2 )]
+margin_left = 641.0
+margin_right = 1278.0
+
+[node name="TextureRect3" parent="Popup/Panel/VBoxContainer/Row3" instance=ExtResource( 2 )]
+margin_left = 1282.0
+margin_right = 1920.0
+
+[node name="Row4" type="HBoxContainer" parent="Popup/Panel/VBoxContainer"]
+margin_top = 753.0
+margin_right = 1920.0
+margin_bottom = 1000.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect1" parent="Popup/Panel/VBoxContainer/Row4" instance=ExtResource( 2 )]
+margin_right = 637.0
+
+[node name="TextureRect2" parent="Popup/Panel/VBoxContainer/Row4" instance=ExtResource( 2 )]
+margin_left = 641.0
+margin_right = 1278.0
+
+[node name="TextureRect3" parent="Popup/Panel/VBoxContainer/Row4" instance=ExtResource( 2 )]
+margin_left = 1282.0
+margin_right = 1920.0
+
+[node name="HBoxContainerButtons" type="HBoxContainer" parent="Popup/Panel/VBoxContainer"]
+margin_top = 1004.0
+margin_right = 1920.0
+margin_bottom = 1077.0
+alignment = 1
+
+[node name="Close" type="Button" parent="Popup/Panel/VBoxContainer/HBoxContainerButtons"]
+margin_left = 765.0
+margin_right = 922.0
+margin_bottom = 73.0
+custom_fonts/font = SubResource( 1 )
+text = "CLOSE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="Button" parent="Popup/Panel/VBoxContainer/HBoxContainerButtons"]
+margin_left = 926.0
+margin_right = 1155.0
+margin_bottom = 73.0
+custom_fonts/font = SubResource( 1 )
+text = "SETTINGS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemDescription" type="PopupPanel" parent="Popup"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -643.5
+margin_top = -318.5
+margin_right = 643.5
+margin_bottom = 318.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup/ItemDescription"]
+margin_right = 1289.0
+margin_bottom = 638.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Popup/ItemDescription/VBoxContainer"]
+margin_right = 1289.0
+margin_bottom = 561.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 5 )
+text = "This is an item description."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseDescription" type="Button" parent="Popup/ItemDescription/VBoxContainer"]
+margin_top = 565.0
+margin_right = 1289.0
+margin_bottom = 638.0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 1 )
+text = "CLOSE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Popup/ItemDescription/VBoxContainer/CloseDescription" to="Popup" method="_on_CloseDescription_pressed"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/MSG_System/fonts/open_sans/OpenSans-Regular.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=5]
+size = 28
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="Container" type="Control"]
+margin_left = -174.0
+margin_top = -94.0
+margin_right = 23.0001
+margin_bottom = -33.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -87.4036
+margin_top = 6.18536
+margin_right = 108.596
+margin_bottom = 107.185
+rect_scale = Vector2( 0.944803, 0.944803 )
+custom_fonts/font = SubResource( 5 )
+text = "Square of Just"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

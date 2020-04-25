@@ -1,0 +1,137 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/textures/dialog_box.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/light/player_light.png" type="Texture" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://particle.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/bg.png" type="Texture" id=5]
+[ext_resource path="res://assets/textures/light/moonlight.png" type="Texture" id=6]
+[ext_resource path="res://src/Templates/EnemyMovement.gd" type="Script" id=7]
+[ext_resource path="res://src/Templates/LayerSystem.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/Scripts/EnemyPredator.tres.gd" type="Script" id=9]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 281.477, -210.831, 723.524, -166.509, 623.677, 69.6216, 354.382, 299.568, -33.0656, 480.929, -105.979, 171.545, -12.281, -74.4438, -54.7339, -63.8822 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5, 6 ), PoolIntArray( 7, 6, 5 ) ]
+outlines = [ PoolVector2Array( -12.281, -74.4438, 281.477, -210.831, 723.524, -166.509, 623.677, 69.6216, 354.382, 299.568, -33.0656, 480.929, -105.979, 171.545, -54.7339, -63.8822 ) ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 34.45
+height = 1.62222
+
+[node name="EnemyPredator" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+position = Vector2( 517.315, 442.484 )
+navpoly = SubResource( 1 )
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 315.595, -74.8317 )
+default_color = Color( 0.937255, 0.156863, 0.156863, 1 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 1079.37, 339.5 )
+__meta__ = {
+"_gizmo_extents_": 100.0
+}
+
+[node name="Sprite" type="Sprite" parent="Position2D"]
+texture = ExtResource( 4 )
+
+[node name="Enemy" type="KinematicBody2D" parent="."]
+position = Vector2( 451.008, 581.773 )
+z_index = 1
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Shadow" type="Sprite" parent="Enemy"]
+modulate = Color( 0.0666667, 0.0666667, 0.0666667, 0.580392 )
+position = Vector2( -0.836243, 30.1046 )
+scale = Vector2( 0.154165, 0.0629665 )
+texture = ExtResource( 2 )
+
+[node name="Rotatable" type="Node2D" parent="Enemy"]
+
+[node name="Sprite" type="AnimatedSprite" parent="Enemy/Rotatable"]
+frames = SubResource( 2 )
+
+[node name="AttackArea" type="Area2D" parent="Enemy/Rotatable"]
+scale = Vector2( 2.73996, 2.46791 )
+monitorable = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Enemy/Rotatable/AttackArea"]
+position = Vector2( 0.785015, 29.3423 )
+scale = Vector2( 2.41862, -1.36485 )
+polygon = PoolVector2Array( -7.04073, -0.365143, 0.00903061, -7.11757, 7.84725, -0.273893, 4.13685, 12.2272, -4.21155, 12.0447 )
+
+[node name="Cone" type="Sprite" parent="Enemy/Rotatable/AttackArea"]
+show_behind_parent = true
+position = Vector2( 0, 21.287 )
+scale = Vector2( 0.077099, 0.0859016 )
+texture = ExtResource( 6 )
+
+[node name="DetectionArea" type="Area2D" parent="Enemy/Rotatable"]
+scale = Vector2( 2.73996, 2.46791 )
+monitorable = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Enemy/Rotatable/DetectionArea"]
+position = Vector2( 0.785015, 29.3423 )
+scale = Vector2( 2.41862, -1.36485 )
+polygon = PoolVector2Array( -47.2577, 3.7585, -3.53303, -60.0534, 46.35, -70.9579, 35.6754, 84.9369, -15.4393, 64.7432 )
+
+[node name="Layer" parent="Enemy/Rotatable" instance=ExtResource( 8 )]
+visible = false
+
+[node name="Face" type="AnimatedSprite" parent="Enemy"]
+visible = false
+frames = SubResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy"]
+
+[node name="MovementResetTimer" type="Timer" parent="Enemy"]
+wait_time = 3.0
+one_shot = true
+
+[node name="AlertResetTimer" type="Timer" parent="Enemy"]
+wait_time = 5.0
+one_shot = true
+
+[node name="BodyShape" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource( 4 )
+
+[node name="Alert" type="Sprite" parent="Enemy"]
+visible = false
+position = Vector2( -39.5166, -39.5166 )
+texture = ExtResource( 4 )
+[connection signal="body_entered" from="Enemy/Rotatable/AttackArea" to="Enemy" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="Enemy/Rotatable/AttackArea" to="Enemy" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="Enemy/Rotatable/DetectionArea" to="Enemy" method="_on_DetectionArea_body_entered"]
+[connection signal="body_exited" from="Enemy/Rotatable/DetectionArea" to="Enemy" method="_on_DetectionArea_body_exited"]

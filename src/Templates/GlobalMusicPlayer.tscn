@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends AudioStreamPlayer
+
+onready var _volume := 0.0
+
+func set_music(new_song: String, position_to_play_from := 0.0) -> void:
+	if load(new_song) as AudioStream and self.get_stream() != load(new_song):
+		self.set_stream(load(new_song))
+		#self.set_volume_db(volume_db)
+		self.play(position_to_play_from)
+	elif self.get_stream() == load(new_song) and not self.is_playing():
+		self.play(position_to_play_from)
+	else:
+		print(\"Invalid music resource\")
+func get_music() -> AudioStream:
+	return self.get_stream() as AudioStream
+func stop_music() -> void:
+	self.stop()
+
+func set_volume(new_volume: float) -> void:
+	_volume = new_volume
+	self.set_volume_db(_volume)
+
+func get_volume() -> float:
+	return _volume
+"
+
+[node name="GlobalMusicPlayer" type="AudioStreamPlayer"]
+script = SubResource( 1 )
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]

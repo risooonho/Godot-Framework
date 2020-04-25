@@ -1,0 +1,148 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/Templates/UI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/textures/light/player_light.png" type="Texture" id=3]
+[ext_resource path="res://assets/characters/player/body_shape.tres" type="Shape2D" id=4]
+[ext_resource path="res://src/Scripts/Player.gd" type="Script" id=5]
+[ext_resource path="res://assets/characters/player/seeker_sprite.png" type="Texture" id=6]
+[ext_resource path="res://assets/characters/player/seeker_sprite2.png" type="Texture" id=7]
+[ext_resource path="res://assets/characters/player/seeker_sprite1.png" type="Texture" id=8]
+[ext_resource path="res://assets/animations/talk_bubble/frame0000.png" type="Texture" id=10]
+[ext_resource path="res://assets/animations/talk_bubble/frame0001.png" type="Texture" id=11]
+[ext_resource path="res://assets/animations/talk_bubble/frame0002.png" type="Texture" id=12]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walking",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "idle_front",
+"speed": 0.5
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ null, null, null, null, null ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 55.8687
+height = 135.253
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="Animation" id=5]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Seeker" type="KinematicBody2D"]
+light_mask = 3
+position = Vector2( 911.631, 499.196 )
+scale = Vector2( 0.7, 0.7 )
+z_index = 3
+collision_layer = 5
+collision_mask = 32769
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+SPEED_SCALE = 40
+
+[node name="Camera2D" type="Camera2D" parent="."]
+z_index = 4096
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 3840
+limit_bottom = 2400
+smoothing_enabled = true
+smoothing_speed = 1.0
+editor_draw_limits = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="UI" parent="Camera2D" instance=ExtResource( 2 )]
+
+[node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 0.176471, 0.176471, 0.176471, 0.513726 )
+position = Vector2( 0.0695801, 93.7654 )
+scale = Vector2( 0.190369, 0.137757 )
+texture = ExtResource( 3 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle_front"
+playing = true
+
+[node name="Face" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 2 )
+
+[node name="BodyShape" type="CollisionShape2D" parent="."]
+position = Vector2( -1.00509, 60.075 )
+shape = ExtResource( 4 )
+
+[node name="InteractableArea" type="Area2D" parent="."]
+collision_layer = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
+position = Vector2( 5.2677, 0.179515 )
+shape = SubResource( 3 )
+
+[node name="PlayerMovement" type="AnimationPlayer" parent="."]
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 3 )
+texture_scale = 1.3
+color = Color( 1, 1, 1, 0.666667 )
+energy = 0.4
+
+[node name="TalkBubble" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+light_mask = 2
+position = Vector2( 49.8479, -31.3858 )
+z_index = 999
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="TalkBubble"]
+light_mask = 2
+position = Vector2( 89.3406, -116.926 )
+frames = SubResource( 4 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="TalkBubble"]
+volume_db = 3.105
+pitch_scale = 9.08
+attenuation = 0.933033
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TalkBubble"]
+anims/create_bubble = SubResource( 5 )
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+pitch_scale = 0.06
+
+[node name="SFX2" type="AudioStreamPlayer" parent="."]
+pitch_scale = 3.54

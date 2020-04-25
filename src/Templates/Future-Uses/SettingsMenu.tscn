@@ -1,0 +1,144 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/font_normal.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/textures/dialog_box.png" type="Texture" id=2]
+[ext_resource path="res://addons/MSG_System/fonts/open_sans/OpenSans-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://src/Scripts/VolumeSlider.gd" type="Script" id=7]
+[ext_resource path="res://src/Templates/UI/SettingsMenu.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Button
+
+func close_settings() -> void:
+	if not global.get_can_talk():
+		global.set_can_talk(true, false)
+		get_parent().get_parent().get_parent().get_parent().get_parent().hide_element(\"Settings\")
+"
+
+[node name="Settings" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Panel"]
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -285.0
+margin_top = -285.0
+margin_right = 285.0
+margin_bottom = 285.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/NinePatchRect"]
+margin_right = 570.0
+margin_bottom = 570.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/NinePatchRect/VBoxContainer"]
+margin_right = 570.0
+margin_bottom = 67.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "SETTINGS"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="Panel/NinePatchRect/VBoxContainer"]
+margin_top = 71.0
+margin_right = 570.0
+margin_bottom = 146.0
+custom_icons/radio_checked = ExtResource( 2 )
+custom_icons/radio_unchecked = ExtResource( 2 )
+custom_icons/unchecked = ExtResource( 5 )
+custom_fonts/font = ExtResource( 1 )
+text = "Fullscreen"
+align = 1
+script = SubResource( 1 )
+
+[node name="VolumeSlider" type="HSlider" parent="Panel/NinePatchRect/VBoxContainer"]
+margin_top = 150.0
+margin_right = 570.0
+margin_bottom = 416.0
+size_flags_horizontal = 15
+size_flags_vertical = 3
+min_value = -20.0
+max_value = 0.0
+step = 2.0
+value = -20.0
+tick_count = 10
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/NinePatchRect/VBoxContainer/VolumeSlider"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -85.5
+margin_top = 49.1094
+margin_right = 85.5
+margin_bottom = 116.109
+custom_fonts/font = ExtResource( 1 )
+text = "Volume"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="Panel/NinePatchRect/VBoxContainer"]
+margin_top = 420.0
+margin_right = 570.0
+margin_bottom = 493.0
+custom_fonts/font = ExtResource( 1 )
+text = "QUIT"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Close" type="Button" parent="Panel/NinePatchRect/VBoxContainer"]
+margin_top = 497.0
+margin_right = 570.0
+margin_bottom = 570.0
+custom_fonts/font = ExtResource( 1 )
+text = "CLOSE"
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="toggled" from="Panel/NinePatchRect/VBoxContainer/CheckBox" to="." method="_on_CheckBox_toggled"]
+[connection signal="value_changed" from="Panel/NinePatchRect/VBoxContainer/VolumeSlider" to="Panel/NinePatchRect/VBoxContainer/VolumeSlider" method="_on_VolumeSlider_value_changed"]
+[connection signal="pressed" from="Panel/NinePatchRect/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="Panel/NinePatchRect/VBoxContainer/Close" to="Panel/NinePatchRect/VBoxContainer/Close" method="close_settings"]

@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/Scripts/NewScene.gd" type="Script" id=1]
+[ext_resource path="res://src/Templates/SeekerPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/textures/levels/abyss.png" type="Texture" id=4]
+[ext_resource path="res://src/Templates/Transition.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Templates/CGHandler.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Templates/ExitNode.tscn" type="PackedScene" id=7]
+
+[node name="TemplateScene" type="Node2D" groups=[
+"level_root",
+]]
+script = ExtResource( 1 )
+music_to_play = "res://assets/music/slow_low.ogg"
+
+[node name="BG" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite" parent="BG"]
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Bounds" type="StaticBody2D" parent="BG/Map"]
+scale = Vector2( 2.09443, 2.06583 )
+
+[node name="Top" type="CollisionPolygon2D" parent="BG/Map/Bounds"]
+polygon = PoolVector2Array( -5.81512, -51.3607, 1913.72, -48.8092, 1911.87, -1.99286, -2.21008, 0 )
+
+[node name="Bottom" type="CollisionPolygon2D" parent="BG/Map/Bounds"]
+position = Vector2( 0, 576.076 )
+polygon = PoolVector2Array( -5.81512, -51.3607, 1913.72, -48.8092, 1911.87, -1.99286, -2.21008, 0 )
+
+[node name="Left" type="CollisionPolygon2D" parent="BG/Map/Bounds"]
+position = Vector2( -0.025238, 1644.5 )
+rotation = -1.57079
+polygon = PoolVector2Array( 562.63, -51.3607, 1645.69, -48.8092, 1644.6, -1.99286, 568.141, -2.10899 )
+
+[node name="Right" type="CollisionPolygon2D" parent="BG/Map/Bounds"]
+position = Vector2( 964.997, 1643.8 )
+rotation = -1.57079
+polygon = PoolVector2Array( 588.336, -51.3607, 1645.69, -48.8092, 1644.6, -1.99286, 584.266, 0 )
+
+[node name="ExitPoint" parent="BG" instance=ExtResource( 7 )]
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="Seeker" parent="Characters" instance=ExtResource( 2 )]
+position = Vector2( 375.397, 307.864 )
+SPEED_SCALE = 50
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="CGHandler" parent="." instance=ExtResource( 6 )]
+
+[node name="CanvasModulate" parent="CGHandler" index="5"]
+visible = false
+color = Color( 0.0313726, 0.0392157, 0.0392157, 1 )
+
+[node name="Transition" parent="." instance=ExtResource( 5 )]
+
+[editable path="CGHandler"]

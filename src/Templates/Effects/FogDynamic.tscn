@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Templates/Future-Uses/diagonal_movement.shader" type="Shader" id=1]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 1 )
+shader_param/scale = 0.05
+shader_param/transparency = 0.5
+
+[sub_resource type="OpenSimplexNoise" id=3]
+seed = 125
+
+[sub_resource type="NoiseTexture" id=4]
+width = 1024
+height = 600
+seamless = true
+noise = SubResource( 3 )
+
+[node name="Fog" type="Sprite"]
+self_modulate = Color( 1, 1, 1, 0.588235 )
+material = SubResource( 6 )
+position = Vector2( 958.837, 480.832 )
+scale = Vector2( 3, 3 )
+z_index = 10
+z_as_relative = false
+texture = SubResource( 4 )
